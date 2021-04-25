@@ -1,0 +1,189 @@
+/* A Big Warning
+change image paths at line 55 & 89 || Images are in "NGG/src/media"*/
+
+package void0.ngg;
+
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class NGGMain implements ActionListener {
+
+    static int RNum, userin, n = 2;
+    static ImageIcon icon, gif;
+    static JFrame frame, frame2;
+    static JPanel panel, panel2;
+    static JLabel picon, picon2, cgif, title, hint1, hint2, attempt, wrong, attemptnum;
+    static JTextField userinbox;
+    static JButton check, reset, restart, exit;
+
+    public static void start() {
+        // Random Number
+        RNum = (int) (Math.random() * 100 + 1);
+
+        if (RNum > 0 && RNum < 21) {
+            hint1.setText("Enter a Number Between 1 and 20");
+        } else if (RNum > 20 && RNum < 41) {
+            hint1.setText("Enter a Number Between 21 and 40");
+        } else if (RNum > 40 && RNum < 61) {
+            hint1.setText("Enter a Number Between 41 and 60");
+        } else if (RNum > 60 && RNum < 81) {
+            hint1.setText("Enter a Number Between 61 and 80");
+        } else if (RNum > 80 && RNum < 101) {
+            hint1.setText("Enter a Number Between 81 and 100");
+        }
+    }
+
+    public static void congratulation() {
+        // Correct ans window
+        frame2 = new JFrame("Yay! You Did It");
+        panel2 = new JPanel(null);
+        frame2.setBounds(520, 300, 306, 210);
+        // frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame2.add(panel2);
+        frame2.setResizable(false);
+        frame2.setVisible(true);
+        panel2.setBackground(Color.decode("#2A231B"));
+
+        // Gif
+        gif = new ImageIcon("Congrats.gif");
+        cgif = new JLabel(gif);
+        cgif.setBounds(0, 0, 290, 130);
+        panel2.add(cgif);
+
+        // Restart Button
+        restart = new JButton("Restart");
+        restart.setBounds(60, 140, 80, 20);
+        restart.addActionListener(new NGGMain());
+        panel2.add(restart);
+
+        // Exit Button
+        exit = new JButton("Exit");
+        exit.setBounds(160, 140, 70, 20);
+        exit.addActionListener(new NGGMain());
+        panel2.add(exit);
+    }
+
+    public static void main(String[] args) {
+        // Main Window
+        frame = new JFrame("Guess The Number");
+        panel = new JPanel(null);
+        frame.setBounds(420, 230, 500, 350);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.add(panel);
+
+        // Title
+        title = new JLabel("Guess The Number");
+        title.setBounds(150, 25, 200, 20);
+        title.setFont(title.getFont().deriveFont(20f));
+        panel.add(title);
+
+        // First Hint Icon
+        icon = new ImageIcon("gems.png");
+        picon = new JLabel(icon);
+        picon.setBounds(25, 91, 20, 20);
+        panel.add(picon);
+        // Second Hint Icon
+        picon = new JLabel(icon);
+        picon.setBounds(25, 141, 20, 20);
+        panel.add(picon);
+        // Attempt Icon
+        picon2 = new JLabel(icon);
+        picon2.setBounds(360, 91, 20, 20);
+        panel.add(picon2);
+
+        // First Hint
+        hint1 = new JLabel("");
+        hint1.setBounds(48, 90, 400, 20);
+        hint1.setFont(hint1.getFont().deriveFont(15f));
+        panel.add(hint1);
+        // Second Hint
+        hint2 = new JLabel("Hint: Enter a Number and Press Check");
+        hint2.setBounds(48, 140, 400, 20);
+        panel.add(hint2);
+        // attempt
+        attempt = new JLabel("Attempt: ");
+        attempt.setBounds(385, 90, 200, 20);
+        panel.add(attempt);
+        attemptnum = new JLabel("");
+        attemptnum.setBounds(440, 90, 20, 20);
+        panel.add(attemptnum);
+        attemptnum.setText(Integer.toString(1));
+        // Wrong ans
+        wrong = new JLabel("");
+        wrong.setForeground(Color.red);
+        wrong.setBounds(215, 200, 100, 20);
+        panel.add(wrong);
+
+        // Input Box
+        userinbox = new JTextField("");
+        userinbox.setBounds(160, 220, 170, 20);
+        userinbox.setHorizontalAlignment(JTextField.CENTER);
+        panel.add(userinbox);
+
+        // Check Button
+        check = new JButton("Check");
+        check.setBounds(160, 250, 70, 20);
+        check.addActionListener(new NGGMain());
+        panel.add(check);
+
+        // Reset Button
+        reset = new JButton("Reset");
+        reset.setBounds(260, 250, 70, 20);
+        reset.addActionListener(new NGGMain());
+        panel.add(reset);
+
+        frame.setVisible(true);
+
+        start();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == check) {
+            userin = Integer.parseInt(userinbox.getText());
+            // System.out.println("In = "+userin+" ok");
+            if (userin == RNum) {
+                wrong.setText("");
+                congratulation();
+            } else if (userin > RNum) {
+                attemptnum.setText(Integer.toString(n));
+                n++;
+                hint2.setText("Hint: Try Lower Number");
+                wrong.setText("Wrong Ans");
+            } else if (userin < RNum) {
+                attemptnum.setText(Integer.toString(n));
+                n++;
+                hint2.setText("Hint: Try Higher Number");
+                wrong.setText("Wrong Ans");
+
+            }
+        } else if (e.getSource() == reset) {
+            // System.out.println("Reset ok");
+            hint2.setText("Hint: Enter a Number and Press Check");
+            userinbox.setText("");
+            attemptnum.setText(Integer.toString(1));
+            wrong.setText("");
+            n = 2;
+            start();
+        } else if (e.getSource() == restart) {
+            // System.out.println("Restart ok");
+            frame2.setVisible(false);
+            hint2.setText("Hint: Enter a Number and Press Check");
+            userinbox.setText("");
+            attemptnum.setText(Integer.toString(1));
+            wrong.setText("");
+            n = 2;
+            start();
+        } else if (e.getSource() == exit) {
+            System.exit(0);
+        }
+    }
+}
