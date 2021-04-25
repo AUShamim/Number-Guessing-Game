@@ -1,5 +1,5 @@
 /* A Big Warning
-change image paths at line 55 & 89 || Images are in "NGG/src/media"*/
+change image paths at line 55 & 89 || Images are in "NGG/media"*/
 
 package void0.ngg;
 
@@ -52,7 +52,7 @@ public class NGGMain implements ActionListener {
         panel2.setBackground(Color.decode("#2A231B"));
 
         // Gif
-        gif = new ImageIcon("Congrats.gif");
+        gif = new ImageIcon("media//Congrats.gif");
         cgif = new JLabel(gif);
         cgif.setBounds(0, 0, 290, 130);
         panel2.add(cgif);
@@ -86,7 +86,7 @@ public class NGGMain implements ActionListener {
         panel.add(title);
 
         // First Hint Icon
-        icon = new ImageIcon("gems.png");
+        icon = new ImageIcon("media//gems.png");
         picon = new JLabel(icon);
         picon.setBounds(25, 91, 20, 20);
         panel.add(picon);
